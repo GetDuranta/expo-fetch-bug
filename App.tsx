@@ -13,19 +13,22 @@ async function testFetch(addText: (s: string)=>void) {
       },
   });
 
-  setTimeout(() => controller.abort(), 500);
+  //setTimeout(() => controller.abort(), 500);
 
   setTimeout(() => {
     const reader = async () => {
-      const reader = resp.body.getReader();
-      while (true) {
-        const { done } = await reader.read();
-        if (done) {
-          break;
+      try {
+        const reader = resp.body.getReader();
+        while (true) {
+          const { done } = await reader.read();
+          if (done) {
+            break;
+          }
+          addText("Got a chunk");
         }
-        addText("Got a chunk");
+      } finally {
+        addText("Finished reading");
       }
-      addText("Finished reading");
     };
     void reader();
   }, 1000);
