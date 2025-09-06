@@ -13,7 +13,7 @@ async function testFetch(addText: (s: string)=>void) {
       },
   });
 
-  //setTimeout(() => controller.abort(), 500);
+  setTimeout(() => controller.abort(), 500);
 
   setTimeout(() => {
     const reader = async () => {
